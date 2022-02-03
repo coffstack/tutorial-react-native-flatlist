@@ -1,11 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  ListRenderItemInfo,
+} from "react-native";
+import { CoffeeHeader } from "./components/CoffeeHeader/CoffeeHeader";
+import { CoffeeItem } from "./components/CoffeeItem";
+import { SeparatorItem } from "./components/SeparatorItem/SeparatorItem";
+import { Coffee, coffeeList } from "./data/coffeeList";
 
 export default function App() {
+  function renderItem({ item }: ListRenderItemInfo<Coffee>) {
+    return <CoffeeItem {...item} />;
+  }
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <FlatList
+        ListHeaderComponent={CoffeeHeader}
+        ItemSeparatorComponent={SeparatorItem}
+        data={coffeeList}
+        keyExtractor={(item) => item.name}
+        renderItem={renderItem}
+      />
     </View>
   );
 }
@@ -13,8 +31,6 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
   },
 });
